@@ -10,6 +10,6 @@ test.describe("US_01.001 | New Item > Create a new item", () => {
 		await page.locator(".app-jenkins-logo").click();
 
 		const job = await page.locator("#projectstatus .jenkins-table__link").getAttribute("href");
-		expect(job).toContain("item1");
+		expect(job).toContain("item2");
 	});
 });
