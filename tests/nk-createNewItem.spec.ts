@@ -1,7 +1,9 @@
-import { test, expect } from "@/base";
+import { test, expect, Page } from "@/base";
 
 test.describe("US_01.001 | Create new item", () => {
-    test("TC_01.001.03 | Verify item creation", async ({ page }) => {
+    test("TC_01.001.03 | Verify item creation", async ({ page }
+        : {page: Page}
+    ) => {
 
         const itemsLocator = page.locator("#projectstatus .jenkins-table__link");
         const countBeforeItems = await itemsLocator.count();
