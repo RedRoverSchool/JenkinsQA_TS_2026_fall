@@ -17,4 +17,4 @@ test.describe("US_01.001 | Create new item", () => {
         
         expect(itemNameArr).toContain(jenkinsData.itemName);
     });
-});
+}); 
