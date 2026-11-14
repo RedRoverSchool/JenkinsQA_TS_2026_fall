@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { jenkinsData } from "./testData/yr-data";
+import { invalidChars, jenkinsData } from "./testData/yr-data";
 import { Locator } from "@playwright/test";
 
 test.describe("US_01.001 | Create new item", () => {
@@ -14,5 +14,17 @@ test.describe("US_01.001 | Create new item", () => {
         const itemNameArr: string[] = await itemLinks.allInnerTexts();
 
         expect(itemNameArr).toContain(jenkinsData.itemName);
+    });
+
+    test("TC_01.001.12 | Verify validation message when item name contains unsupported special characters", async ({ page }: { page: Page }) => {
+        await page.locator("#side-panel a[href$=newJob]").click();
+
+        const errorMessage: Locator = page.locator(".jenkins-form-item .error");
+
+        for (const char of invalidChars) {
+            await page.locator("#name").fill(char);
+
+            await expect.soft(errorMessage).toHaveText(`‘${char}’ is an unsafe character`);
+        }
     });
 });
