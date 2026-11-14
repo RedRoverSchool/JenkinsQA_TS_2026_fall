@@ -14,7 +14,7 @@ test.describe("US_01.003 | Copy from", () => {
         //TC steps
         await page.locator("#side-panel a[href$='newJob']").click();
         const copyFrom = page.locator("#from");
-        await copyFrom.fill(1 + jenkinsData.itemName);
+        await copyFrom.pressSequentially(1 + jenkinsData.itemName);
 
         const noItemsDropdown = page.locator('.jenkins-dropdown__placeholder');
         await expect(noItemsDropdown).toHaveText(jenkinsData.textNoItemsDropdown);
