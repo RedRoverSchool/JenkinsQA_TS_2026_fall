@@ -1,7 +1,7 @@
 import { test, expect, Page } from "@/base";
 import { jenkinsData } from "./testData/as-data";
 
-test.describe("US_01.002 | New Item > Folder", () => {
+test.describe("US_01.002 | Folder", () => {
     test('TC_01.002.03 | New Item > Folder > Verify folder creation with Display Name', async ({ page }) => {
         await page.locator("#side-panel a[href$='newJob']").click();
         await page.locator("input#name").fill(jenkinsData.folderName);
