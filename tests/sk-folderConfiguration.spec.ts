@@ -14,8 +14,8 @@ test.describe('US_05.003 | Folder Configuration > Pipeline Libraries ',()=>{
 
     test('TC_05.003.01 | Verify adding a new Pipeline Library',async({page}: { page: Page})=>{
         await page.getByRole('button', { name: 'Add' }).click();
-        await page.locator('.setting-main [checkdependson="name"]').fill(jenkinsData.itemName);
-        await page.locator('[checkdependson="defaultVersion implicit allowVersionOverride name"]').fill(jenkinsData.nameLibrary);
+        await page.locator('.setting-main [checkdependson="name"]').fill(jenkinsData.nameLibrary);
+        await page.locator('[checkdependson="defaultVersion implicit allowVersionOverride name"]').fill(jenkinsData.defaultVersion);
         await page.getByRole('button', { name: 'Save' }).click();
         await expect(page.locator('.jenkins-build-caption')).toContainText(jenkinsData.itemName)
 
