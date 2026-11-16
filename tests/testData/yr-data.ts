@@ -1,5 +1,4 @@
 export const jenkinsData = {
     itemName: "item1",
+    invalidChars: ["/", "!", "%", "$", "&", ";", ":"],
 };
-
-export const invalidChars = ["/", "!", "%", "$", "&", ";", ":"];
