@@ -4,7 +4,7 @@ import { jenkinsData } from "./testData/nk-data";
 
 test.describe("US_01.001 | Create new item", () => {
     test("TC_01.001.03 | Verify item creation", async ({ page }
-        : {page: Page}
+        : { page: Page }
     ) => {
 
         const itemsLocator = page.locator("#projectstatus .jenkins-table__link");
@@ -14,7 +14,7 @@ test.describe("US_01.001 | Create new item", () => {
         await page.locator("#side-panel a[href$='newJob']").click();
         await page.locator("#name").fill(itemName);
         await page.locator(".hudson_model_FreeStyleProject").click();
-        await page.press("#createItem","Enter");
+        await page.press("#createItem", "Enter");
 
         await page.locator(".app-jenkins-logo").click();
 
@@ -22,15 +22,14 @@ test.describe("US_01.001 | Create new item", () => {
     });
 
 
-    let itemType: keyof typeof ItemType;
-    for (itemType in ItemType) {
-        test(`TC_01.001.04 | Verify unique named ${ItemType[itemType]} item creation inside folder`, async ({ page, createNewItem, selectItemType, navigateToItem, naviateToHomePage }
-            : {page: Page} & ItemCreationFixtures & NavigationFixtures
+    jenkinsData.itemTypes.forEach((itemType: ItemType) => {
+        test(`TC_01.001.04 | Verify unique named ${itemType} item creation inside folder`, async ({ page, createNewItem, selectItemType, navigateToItem, naviateToHomePage }
+            : { page: Page } & ItemCreationFixtures & NavigationFixtures
         ) => {
 
             const uniqueItemName = jenkinsData.itemName;
             const folder = jenkinsData.folderName;
-            
+
             await createNewItem(uniqueItemName, itemType);
             await createNewItem(folder, ItemType.Folder);
             await navigateToItem(folder);
@@ -38,18 +37,18 @@ test.describe("US_01.001 | Create new item", () => {
             await page.locator("#side-panel a[href$=newJob]").click();
             await page.locator("#name").fill(uniqueItemName);
             await selectItemType(itemType);
-            await page.press("#createItem","Enter");
+            await page.press("#createItem", "Enter");
 
             await naviateToHomePage();
             await navigateToItem(folder);
 
             const itemsLocatorInsideFolder = page.locator("#projectstatus .jenkins-table__link");
-        
+
             await expect(itemsLocatorInsideFolder).toHaveText(uniqueItemName);
 
         });
-    }
-
+    });
+    
     const unsafeCharacters = ['/', '!', '%', '$', '&', ';', ':', '@'];
     for (const symbol of unsafeCharacters) {
         test(`TC_01.001.17 | Verify validation message for unsafe character "${symbol}"`, async ({ page }) => {

@@ -1,5 +1,4 @@
 import { test as base, Page } from "@/base";
-import { jenkinsData } from "../testData/yl-data";
 
 export interface NavigationFixtures {
     naviateToHomePage: () => Promise<void>;
@@ -7,18 +6,22 @@ export interface NavigationFixtures {
 }
 
 export const test = base.extend<NavigationFixtures>({
-    naviateToHomePage: async ({ page }, use) => {
-        const navigateToHome: NavigationFixtures['naviateToHomePage'] = async () => {
+    naviateToHomePage: async ({ page }: { page: Page }, use) => {
+
+        const navigateToHome: NavigationFixtures["naviateToHomePage"] = async () => {
             await page.goto("/");
         };
+
         await use(navigateToHome);
     },
 
-    navigateToItem: async ({ page }: {page: Page}, use) => {
-        const navigateToItemWithName: NavigationFixtures['navigateToItem'] = async (itemName: string) => {
-            const itemLinkLocator = page.locator(`#job_${itemName} .jenkins-table__link`);
+    navigateToItem: async ({ page }: { page: Page }, use) => {
+        const navigateToItemWithName: NavigationFixtures["navigateToItem"] = async (itemName: string) => {
+
+            const itemLinkLocator = page.locator(`#job_${itemName.replaceAll(" ", "%20")} .jenkins-table__link`);
             await itemLinkLocator.click();
         };
+
         await use(navigateToItemWithName);
     }
 
