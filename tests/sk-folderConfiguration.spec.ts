@@ -24,11 +24,13 @@ test.describe("US_05.003 | Folder Configuration > Pipeline Libraries ",()=>{
         await page.getByRole("button", { name: "Add" }).click();
         await page.locator(".setting-main [checkdependson='name']").fill(jenkinsData.nameLibrary);
         await page.locator("[checkdependson='defaultVersion implicit allowVersionOverride name']").fill(jenkinsData.defaultVersion);
+        await expect(page.getByText("You must enter a name.")).not.toBeVisible();
         await page.getByRole("button", { name: "Save" }).click();
         await page.getByRole("link", { name: "Configure" }).click();
         await page.getByRole('button', { name: 'Delete' }).first().click();
+        await page.getByRole("button", { name: "Add" }).first().click();       
                        
-        await expect(page.getByText("You must enter a name.")).not.toBeVisible();       
+        await expect(page.getByText("You must enter a name.")).toBeVisible();       
         
     });
 });
