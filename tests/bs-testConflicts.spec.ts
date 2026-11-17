@@ -15,4 +15,10 @@ test.describe("testing conflicts suite", () => {
 
         await expect(footer).toHaveText(jenkinsData.jenkinsVersion);
     });
-}); 
+
+    test("testing conflicts 2", async ({ page }: { page: Page }) => {
+        const footer = page.locator("footer .jenkins_ver");
+
+        await expect(footer).toHaveText(jenkinsData.jenkinsVersion);
+    });
+});
