@@ -27,9 +27,8 @@ test.describe("US_05.003 | Folder Configuration > Pipeline Libraries ",()=>{
         await page.getByRole("button", { name: "Save" }).click();
 
         await page.getByRole("link", { name: "Configure" }).click();
-        const libraryBlock = page.locator("div.setting-main:has(input[name='_.name'])");        
-        await libraryBlock.locator("button.repeatable-delete").click(); 
-
+        
+        await page.getByRole('button', { name: 'Delete' }).first().click(); 
         await expect(page.locator("input[name='_.name']")).not.toBeVisible();
         
     });
