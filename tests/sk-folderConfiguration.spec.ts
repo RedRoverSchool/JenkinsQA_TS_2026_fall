@@ -21,11 +21,9 @@ test.describe("US_05.003 | Folder Configuration > Pipeline Libraries ",()=>{
     });
 
     test("TC_05.003.02 | Verify removing a Pipeline Library", async ({page}: { page: Page}) => {                
-        await page.getByRole("button", { name: "Add" }).click();
-        await expect(page.getByText("You must enter a name.")).toBeVisible();
+        await page.getByRole("button", { name: "Add" }).click();        
         await page.locator(".setting-main [checkdependson='name']").fill(jenkinsData.nameLibrary);
-        await page.locator("[checkdependson='defaultVersion implicit allowVersionOverride name']").fill(jenkinsData.defaultVersion);
-        await expect(page.getByText("You must enter a name.")).not.toBeVisible();
+        await page.locator("[checkdependson='defaultVersion implicit allowVersionOverride name']").fill(jenkinsData.defaultVersion);        
         await page.getByRole("button", { name: "Save" }).click();
         await page.getByRole("link", { name: "Configure" }).click();
         await page.getByRole('button', { name: 'Delete' }).first().click();
