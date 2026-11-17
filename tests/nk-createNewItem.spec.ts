@@ -13,7 +13,7 @@ test.describe("US_01.001 | Create new item", () => {
 
         const itemsLocator = "#projectstatus .jenkins-table__link";
         expect(page.locator(itemsLocator)).toHaveCount(countOfItems);
-        
+
         await page.locator("#side-panel a[href$='newJob']").click();
         await page.locator("#name").fill(itemName);
         await page.locator(".hudson_model_FreeStyleProject").click();
@@ -56,7 +56,6 @@ test.describe("US_01.001 | Create new item", () => {
     for (const symbol of unsafeCharacters) {
         test(`TC_01.001.17 | Verify validation message for unsafe character "${symbol}"`, async ({ page }) => {
             await page.getByRole('link', { name: 'New Item' }).click();
-            await page.locator('input#name').clear();
             await page.locator('input#name').fill(symbol);
             const error = page.locator('.error');
 
