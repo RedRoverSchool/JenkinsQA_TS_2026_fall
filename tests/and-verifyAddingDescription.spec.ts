@@ -9,6 +9,6 @@ test.describe("US_02.002 | Project Description", () => {
         await page.getByRole("button", {name: "OK"}).click();
         await page.locator("textarea[name='description']").fill(jenkinsData.projectDescription);
         await page.getByRole("button", {name: "Save"}).click();
-        expect(page.locator("#description-content")).toHaveText(jenkinsData.projectDescription);
+        await expect(page.locator("#description-content")).toHaveText(jenkinsData.projectDescription);
     });
 })
