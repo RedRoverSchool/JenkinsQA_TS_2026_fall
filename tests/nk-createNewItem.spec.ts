@@ -3,7 +3,7 @@ import { NavigationFixtures } from "./fixtures/nk-navigationFixtures";
 import { jenkinsData } from "./testData/nk-data";
 
 test.describe("US_01.001 | Create new item", () => {
-    test.only("TC_01.001.03 | Verify item creation", async ({ page }
+    test("TC_01.001.03 | Verify item creation", async ({ page }
         : {page: Page}
     ) => {
 
