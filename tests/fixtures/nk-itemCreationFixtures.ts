@@ -18,7 +18,7 @@ export interface ItemCreationFixtures {
 export const test = base.extend<ItemCreationFixtures>({
     selectItemType: async ({ page }: {page: Page} , use) => {
         const selectWithType: ItemCreationFixtures['selectItemType'] = async (itemType: ItemType) => {
-            await page.getByText(ItemType[itemType], { exact: true }).click();
+            await page.getByText(itemType, { exact: true }).click();
         };
 
         await use(selectWithType);

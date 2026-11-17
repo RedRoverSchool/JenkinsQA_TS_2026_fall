@@ -21,21 +21,22 @@ test.describe("US_01.001 | Create new item", () => {
         await expect(itemsLocator).toHaveCount(countBeforeItems + 1);
     });
 
-    for (const itemType:ItemType in ItemType) {
-        test(`TC_01.001.04 | Verify unique named ${ItemType[itemType]} item creation inside folder`, async ({ page, createNewItem, selectItemType, navigateToItem, naviateToHomePage }
+    for (const itemType in ItemType) {
+        test(`TC_01.001.04 | Verify unique named ${itemType} item creation inside folder`, async ({ page, createNewItem, selectItemType, navigateToItem, naviateToHomePage }
             : {page: Page} & ItemCreationFixtures & NavigationFixtures
         ) => {
 
             const uniqueItemName = jenkinsData.itemName;
             const folder = jenkinsData.folderName;
+            const currentItemType = itemType as ItemType ;
             
-            await createNewItem(uniqueItemName, itemType);
+            await createNewItem(uniqueItemName, currentItemType);
             await createNewItem(folder, ItemType.Folder);
             await navigateToItem(folder);
 
             await page.locator("#side-panel a[href$=newJob]").click();
             await page.locator("#name").fill(uniqueItemName);
-            await selectItemType(itemType);
+            await selectItemType(currentItemType);
             await page.press("#createItem","Enter");
 
             await naviateToHomePage();
