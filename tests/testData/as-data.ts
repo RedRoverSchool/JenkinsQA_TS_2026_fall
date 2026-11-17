@@ -1,5 +1,5 @@
 export const jenkinsData = {
     folderName: 'TestFolder1',
     displayName: 'MyTestFolder1',
-    description: 'This is a test description.'
+    description: 'This is a test description.',
 };
