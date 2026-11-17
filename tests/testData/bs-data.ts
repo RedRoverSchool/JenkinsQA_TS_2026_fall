@@ -9,5 +9,6 @@ export const jenkinsData = {
         deleteProject: "Delete Project",
         configure: "Configure",
         rename: "Rename"
-    }
+    },
+    jenkinsVersion: "Jenkins 2.580.1"
 };
