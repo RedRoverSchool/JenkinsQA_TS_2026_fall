@@ -10,14 +10,14 @@ export enum ItemType {
 }
 
 export interface ItemCreationFixtures {
-    selectItemType: (itemType: ItemType) => Promise<void>;
-    createNewItem: (itemName: string, itemType: ItemType) => Promise<void>;
+    selectItemType: (itemType: keyof typeof ItemType) => Promise<void>;
+    createNewItem: (itemName: string, itemType: keyof typeof ItemType) => Promise<void>;
     
 };
 
 export const test = base.extend<ItemCreationFixtures>({
     selectItemType: async ({ page }: {page: Page} , use) => {
-        const selectWithType: ItemCreationFixtures['selectItemType'] = async (itemType: ItemType) => {
+        const selectWithType: ItemCreationFixtures['selectItemType'] = async (itemType: keyof typeof ItemType) => {
             await page.getByText(ItemType[itemType], { exact: true }).click();
         };
 
@@ -25,7 +25,7 @@ export const test = base.extend<ItemCreationFixtures>({
     },
 
     createNewItem: async ({ page, naviateToHomePage, selectItemType}: {page: Page} & NavigationFixtures & ItemCreationFixtures, use) => {
-        const createWithName: ItemCreationFixtures['createNewItem'] = async (itemName: string, itemType: ItemType) => {
+        const createWithName: ItemCreationFixtures['createNewItem'] = async (itemName: string, itemType: keyof typeof ItemType) => {
             await page.locator("#side-panel a[href$=newJob]").click();
             await page.locator("#name").fill(itemName);
             await selectItemType(itemType);
