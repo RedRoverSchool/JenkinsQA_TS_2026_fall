@@ -22,7 +22,7 @@ test.describe("US_01.003 | Duplicate an existing item", () => {
         const noItemsDropdown = page.locator('.jenkins-dropdown__placeholder');
         await expect(noItemsDropdown).toHaveText(jenkinsData.textNoItemsDropdown);
     });
-    
+
     test('TC_01.003.02 | Verify that "Duplicate an existing item" field displays matching items in the dropdown list', async ({ page }) => {
         await page.locator("#side-panel a[href$='newJob']").click();
         await page.locator("#duplicate-job").click();
@@ -36,5 +36,15 @@ test.describe("US_01.003 | Duplicate an existing item", () => {
 
         const itemsDropdown = page.locator('.jenkins-dropdown__item');
         await expect(itemsDropdown).toHaveText(jobName);
+    });
+
+    test('TC_01.003.03 | Verify that "Duplicate an existing item" field is displayed on the new item creation page', async ({ page }) => {
+        await page.locator("#side-panel a[href$='newJob']").click();
+
+        const duplicateField = page.locator('#duplicate-job .jenkins-choice-list__item__label');
+        await expect(duplicateField).toHaveText(jenkinsData.textDuplicatedItemField);
+
+        const descriptionDuplicateField = page.locator('#duplicate-job .jenkins-choice-list__item__description');
+        await expect(descriptionDuplicateField).toHaveText(jenkinsData.descriptionTextDuplicatedItemField);
     });
 });
