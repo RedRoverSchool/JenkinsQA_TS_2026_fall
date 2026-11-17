@@ -21,6 +21,7 @@ test.describe("US_01.001 | Create new item", () => {
         await expect(itemsLocator).toHaveCount(countBeforeItems + 1);
     });
 
+
     let itemType: keyof typeof ItemType;
     for (itemType in ItemType) {
         test(`TC_01.001.04 | Verify unique named ${ItemType[itemType]} item creation inside folder`, async ({ page, createNewItem, selectItemType, navigateToItem, naviateToHomePage }
