@@ -36,6 +36,16 @@ test.describe("US_01.001 | Create new item",()=>{
         
         await expect(error).toContainText('A job already exists with the name');
         
-    });    
+    }); 
+
+    test("TC_01.001.26 | Verify all item types are displayed on New Item page",async({page})=>{
+        await page.getByRole("link", { name: "New Item" }).click();
+        for (const itemType of jenkinsData.itemTypes) {
+            await expect(
+                page.locator(`.jenkins-choice-list__item__label:text-is("${itemType}")`)
+            ).toBeVisible();
+        }
+        
+    }); 
 
 });
