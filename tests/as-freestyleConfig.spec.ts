@@ -18,17 +18,15 @@ test.describe("US_02.003 | Configure SCM", () => {
         await page.getByRole('link', { name: jenkinsData.freestyleProjectName }).click();
         await page.getByRole('link', { name: 'Configure' }).click();
 
-        const actualLabels = [
-            await page.locator(".jenkins-section__title")
-                .filter({ hasText: expectedLabels.header })
-                .textContent(),
-            await page.getByText(expectedLabels.description, { exact: true }).textContent(),
-            await page.getByText(expectedLabels.none, { exact: true }).textContent(),
-            await page.getByText(expectedLabels.git, { exact: true }).textContent(),
-        ];
+        const section = page.locator('section.jenkins-section').first();
 
-        expect(actualLabels.map(label => label?.trim())).toEqual(
-            Object.values(expectedLabels)
-        );
+        const actualLabels = {
+            header: (await section.locator('.jenkins-section__title').textContent())?.trim(),
+            description: await section.locator('.jenkins-section__description').innerText(),
+            none: await section.locator('label').filter({ hasText: 'None' }).innerText(),
+            git: await section.locator('label').filter({ hasText: 'Git' }).innerText(),
+        };
+
+        expect(actualLabels).toEqual(expectedLabels);
     });
 });
