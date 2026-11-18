@@ -2,7 +2,7 @@ import { test, expect, Page } from "@/base";
 import { jenkinsData } from "./testData/as-data";
 
 test.describe("US_01.002 | Folder", () => {
-    test('TC_01.002.02 | New Item > Folder > Verify folder creation with Display Name', async ({ page }) => {
+    test("TC_01.002.02 | Verify folder creation with Display Name", async ({ page }) => {
         await page.locator("#side-panel a[href$='newJob']").click();
         await page.locator("input#name").fill(jenkinsData.folderName);
         await page.locator(".com_cloudbees_hudson_plugins_folder_Folder").click();
@@ -16,7 +16,7 @@ test.describe("US_01.002 | Folder", () => {
         ).toBeVisible();
      });
 
-     test('TC_01.002.03 | New Item > Folder > Verify folder creation with Description', async ({ page }) => {
+     test("TC_01.002.03 | Verify folder creation with Description", async ({ page }) => {
         await page.locator("#side-panel a[href$='newJob']").click();
         await page.locator("input#name").fill(jenkinsData.folderName);
         await page.locator(".com_cloudbees_hudson_plugins_folder_Folder").click();
