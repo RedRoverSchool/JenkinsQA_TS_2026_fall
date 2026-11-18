@@ -46,6 +46,14 @@ test.describe("US_01.001 | Create new item",()=>{
             ).toBeVisible();
         }
         
+    });
+    
+    test("TC_01.001.27 | Verify all item types are displayed on New Item page",async({page})=>{
+        await page.getByRole("link", { name: "New Item" }).click();
+
+        const actualTypes = await page.locator('.jenkins-choice-list__item__label').allInnerTexts();        
+        expect(actualTypes).toEqual(jenkinsData.itemTypes);      
+                
     }); 
 
 });
