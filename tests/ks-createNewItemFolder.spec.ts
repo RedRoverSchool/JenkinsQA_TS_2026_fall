@@ -16,7 +16,7 @@ test.describe("US_01.002 | Create New Item Folder", () => {
         await page.locator("#ok-button").click();
         await page.locator(".jenkins-breadcrumbs__list-item:nth-child(2)").click();
 
-        const nestedFullFolderName = page.locator("#main-panel").getByText('Full folder name:');
+        const nestedFullFolderName = page.locator("#main-panel").getByText("Full folder name:");
 
         await expect(nestedFullFolderName).toContainText(`${usedData.itemNameOne}/${usedData.itemNameTwo}`);
 
