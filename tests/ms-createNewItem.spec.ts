@@ -1,12 +1,12 @@
 import { test, expect, Page } from "@/base";
 import { jenkinsData } from "./testData/bs-data";
 
-test.describe("US_01.001 | Creaye new item", () => {
+test.describe("US_01.001 | Create a new item", () => {
   test("TC_01.001.23 | Verify item creation", async ({ page }) => {
-    page.locator("#side-panel a[href$='newJob']").click();
-    page.locator("#name").fill(jenkinsData.itemName);
-    await page.locator(".hudson_model_FreeStyleProject").click();
-    await page.locator("#ok-button").click();
+    await page.locator("span.task-link-text").filter({ hasText: "New Item" }).click();
+    await page.locator("#name").fill(jenkinsData.itemName);
+    await page.locator(".jenkins-choice-list__item__label").filter({ hasText: "Freestyle project" }).click();
+    await page.getByRole("button", { name: "Ok" }).click();
 
     await page.locator(".app-jenkins-logo").click();
     const itemsLocator = page.locator("#projectstatus .jenkins-table__link");
