@@ -2,7 +2,7 @@ import { test, expect, Page } from "@/base";
 import { usedData } from "./testData/ks-data";
 
 
-test.describe("US_01.002 | Create New Item Folder", () => {
+test.describe("US_01.002 | New Item > Folder", () => {
     test("TC_01.002.01 | Create nested folder", async ({ page }: { page: Page}) => {
         await page.locator("a[href='newJob']").click();
         await page.locator(".jenkins-input#name").fill(usedData.itemNameOne);
