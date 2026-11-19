@@ -11,7 +11,7 @@ test.describe("US_01.001 | Creatе a new item'", () => {
 
         await page.locator('.app-jenkins-logo').click();
 
-        expect(page.locator('.jenkins-jobs-list__item__label')).toHaveText(usedData.itemName);
+        await expect(page.locator('.jenkins-jobs-list__item__label')).toHaveText(usedData.itemName);
 
     });
 });
