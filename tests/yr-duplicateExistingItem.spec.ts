@@ -25,4 +25,19 @@ test.describe("US_01.003 | Duplicate an existing item", () => {
 
         await expect(descriptionField).toHaveValue(jenkinsData.sourceItemDescription);
     });
+
+    test("TC_01.003.05 | Verify that item is not created from non-existing source", async ({ page }: { page: Page }) => {
+        await page.getByRole("link", { name: "New Item" }).click();
+        await page.locator("#name").fill(jenkinsData.itemName);
+        await page.locator("#duplicate-job").click();
+        await page.getByPlaceholder("Type to autocomplete").fill(jenkinsData.nonExistingItemName);
+        await page.getByRole("button", { name: "OK" }).click();
+        await page.locator("a.app-jenkins-logo").click();
+
+        const itemLinks: Locator = page.locator("#projectstatus .jenkins-table__link");
+        await itemLinks.first().waitFor();
+        const itemNameArr: string[] = await itemLinks.allInnerTexts();
+
+        expect(itemNameArr).not.toContain(jenkinsData.itemName);
+    });
 });
