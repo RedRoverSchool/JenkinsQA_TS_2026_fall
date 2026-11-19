@@ -29,4 +29,34 @@ test.describe("US_02.003 | Configure SCM", () => {
 
         expect(actualLabels).toEqual(expectedLabels);
     });
+
+    test('TC_02.003.02 | Verify available SCM types', async ({ page }) => {
+        await page.locator("#side-panel a[href$='newJob']").click();
+        await page.locator('input#name').fill(jenkinsData.freestyleProjectName);
+        await page.locator('.hudson_model_FreeStyleProject').click();
+        await page.locator('#ok-button').click();
+
+        await page.getByRole('link', { name: jenkinsData.freestyleProjectName }).click();
+        await page.getByRole('link', { name: 'Configure' }).click();
+
+        const section = page.locator('section.jenkins-section').first();
+        const noneOption = section.getByLabel('None', { exact: true });
+        const gitOption = section.getByLabel('Git', { exact: true });
+
+        const noneLabel = section.locator('label.jenkins-radio__label')
+            .filter({ hasText: /^None$/ });
+
+        const gitLabel = section.locator('label.jenkins-radio__label')
+            .filter({ hasText: /^Git$/ });
+
+        await expect(noneOption).toBeVisible();
+        await expect(gitOption).toBeVisible();
+
+        await gitLabel.click();
+        await expect(gitOption).toBeChecked();
+
+        await noneLabel.click();
+        await expect(noneOption).toBeChecked();
+        await expect(gitOption).not.toBeChecked();
+    });
 });
