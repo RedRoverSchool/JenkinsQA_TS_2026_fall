@@ -127,9 +127,70 @@ export async function cleanData(request: APIRequestContext) {
 		await postPage("submitDescription", body, crumb);
 	}
 
+	async function resetCoreSystemSettings() {
+		const mainPage = await getPage("");
+		const crumb = getCrumbFromPage(mainPage);
+
+		if (!crumb) {
+			throw new Error("Could not retrieve Jenkins CSRF crumb.");
+		}
+
+		const script = `
+            import jenkins.model.Jenkins
+
+            def jenkins = Jenkins.get()
+
+            // Explicitly verify Overall / Administer permission
+            jenkins.checkPermission(Jenkins.ADMINISTER)
+
+            // Clear the System Message
+            jenkins.setSystemMessage(null)
+
+            // Restore the default quiet period
+            jenkins.setQuietPeriod(null)
+
+            // Restore the default SCM checkout retry count
+            jenkins.setScmCheckoutRetryCount(0)
+
+            // Restore the default project naming strategy
+            jenkins.setProjectNamingStrategy(null)
+
+            // Save Jenkins configuration
+            jenkins.save()
+
+            println "CORE_SYSTEM_SETTINGS_RESET_OK"
+        `;
+
+		const body = new URLSearchParams({ script }).toString();
+
+		let output: string;
+
+		try {
+			const res = await postPage("scriptText", body, crumb);
+			output = await res.text();
+		} catch (error) {
+			throw new Error(
+				`Jenkins core settings cleanup failed. ` +
+					`The account "${USERNAME}" may not have Overall / Administer permission. ` +
+					`Details: ${String(error)}`
+			);
+		}
+
+		if (!output.includes("CORE_SYSTEM_SETTINGS_RESET_OK")) {
+			throw new Error(
+				`Jenkins core settings cleanup did not complete. ` +
+					`Check the account permissions and Jenkins response: ` +
+					output.slice(0, 500)
+			);
+		}
+
+		console.log("Jenkins core System settings reset.");
+	}
+
 	await deleteViews();
 	await deleteJobs();
 	await deleteUsers();
 	await deleteNodes();
 	await deleteDescription();
+	await resetCoreSystemSettings();
 }
