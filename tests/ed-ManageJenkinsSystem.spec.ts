@@ -9,6 +9,6 @@ test.describe("US_10.003 | Manage Jenkins > System", () => {
         await page.locator("textarea[name='system_message']").fill(jenkinsData.systemMessage);
         await page.getByRole("button", {name: "Save"}).click();
 
-        expect(page.locator("#systemmessage")).toHaveText(jenkinsData.systemMessage);
+        await expect(page.locator("#systemmessage")).toHaveText(jenkinsData.systemMessage);
     });
 });
