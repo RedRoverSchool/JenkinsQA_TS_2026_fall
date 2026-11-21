@@ -1,63 +1,73 @@
-import { Locator } from "@playwright/test";
 import { test, expect, Page, ItemCreationFixtures, ItemType } from "./fixtures/nk-itemCreationFixtures";
 import { NavigationFixtures } from "./fixtures/nk-navigationFixtures";
 import { jenkinsData } from "./testData/nk-data";
+import { cleanData } from "@/helpers/cleanData";
 
-test.describe("US_01.001 | Create new item", () => {
 
-    jenkinsData.itemTypes.forEach((itemType: ItemType) => {
-        test(`TC_01.001.03 | Verify ${itemType} item creation`, async ({ page, createNewItem }
-            : { page: Page } & ItemCreationFixtures
-        ) => {
-            
-            const itemName = jenkinsData.itemName;
-            let countOfItems = 0;
+const uniqueItemName = jenkinsData.itemName;
+const folder = jenkinsData.folderName; 
+const itemsLocator = "#projectstatus .jenkins-table__link";
 
-            const itemsLocator = "#projectstatus .jenkins-table__link";
-            await expect(page.locator(itemsLocator)).toHaveCount(countOfItems);
 
-            await createNewItem(itemName, itemType);
-            countOfItems++;
+jenkinsData.itemTypes.forEach((itemType: ItemType) => {
+        
+    test.describe(`US_01.001 | Create new ${itemType} item with unique ItemName name`, () => {
 
-            await expect(page.locator(itemsLocator)).toHaveCount(countOfItems);
+        test.describe.configure({ mode: "serial" });
+        test.use({ isSerial: true });
+
+        test(`TC_11.001.01 | Verify there are no ${itemType} items by default at the start page`, async ({ page, createNewItem }
+                : { page: Page } & ItemCreationFixtures
+            ) => {
+            await expect(page.locator(itemsLocator)).toHaveCount(0);
         });
-    });
 
-    jenkinsData.itemTypes.forEach((itemType: ItemType) => {
-        test(`TC_01.001.04 | Verify unique named ${itemType} item creation inside folder`, async ({ page, createNewItem, selectItemType, navigateToItem, naviateToHomePage }
+        
+        test(`TC_01.001.03 | Verify ${itemType} item creation`, async ({ page, createNewItem, naviateToHomePage }
+                : { page: Page } & ItemCreationFixtures & NavigationFixtures
+            ) => {
+            await createNewItem(uniqueItemName, itemType);
+            await naviateToHomePage();
+            await expect(page.locator(itemsLocator)).toHaveCount(1);
+            await expect(page.locator(itemsLocator)).toHaveText(uniqueItemName);
+        });
+
+       
+        
+        test("TC_16.001.01 | Verify few Projects' names are visible on the Dashboard",
+             async ({ page, createNewItem, naviateToHomePage }
+                : { page: Page } & ItemCreationFixtures & NavigationFixtures
+            ) => {
+            await createNewItem(folder, ItemType.Folder);
+            await naviateToHomePage();
+            await expect(page.locator(itemsLocator)).toHaveCount(2);
+        });
+
+        test("TC_24.002.01 | Verify there are no items by default in the new created folder",
+             async ({ page, navigateToItem }
+                : { page: Page } & ItemCreationFixtures & NavigationFixtures
+            ) => {
+            await navigateToItem(folder);
+            await expect(page.locator(itemsLocator)).toHaveCount(0);
+        });
+        
+        test(`TC_01.001.04 | Verify unique named ${itemType} item creation inside folder`, 
+            async ({ page, createNewItem, navigateToParentFolder }
             : { page: Page } & ItemCreationFixtures & NavigationFixtures
         ) => {
-
-            const uniqueItemName = jenkinsData.itemName;
-            const folder = jenkinsData.folderName;
-            const uniqueItemNameCount = 1;
-            
-
             await createNewItem(uniqueItemName, itemType);
-            const itemsLocator = "#projectstatus .jenkins-table__link";
-            await expect.soft(page.locator(itemsLocator)).toHaveCount(uniqueItemNameCount);
+            await navigateToParentFolder();
 
-            await createNewItem(folder, ItemType.Folder);
-            let insideFolderItemsCount = 0;
-
-            await navigateToItem(folder);
-            await expect(page.locator(itemsLocator)).toHaveCount(insideFolderItemsCount);
-
-            await page.locator("#side-panel a[href$=newJob]").click();
-            await page.locator("#name").fill(uniqueItemName);
-            await selectItemType(itemType);
-            await page.press("#createItem", "Enter");
-            insideFolderItemsCount++;
-
-            await naviateToHomePage();
-            await navigateToItem(folder);
-
-            await expect(page.locator(itemsLocator)).toHaveCount(insideFolderItemsCount);
+            await expect(page.locator(itemsLocator)).toHaveCount(1);
             await expect(page.locator(itemsLocator)).toHaveText(uniqueItemName);
 
         });
+        
     });
+});
 
+
+test.describe("US_01.001 | Create new item", () => {
     const unsafeCharacters = ['/', '!', '%', '$', '&', ';', ':', '@'];
     for (const symbol of unsafeCharacters) {
         test(`TC_01.001.17 | Verify validation message for unsafe character "${symbol}"`, async ({ page }) => {
@@ -67,5 +77,6 @@ test.describe("US_01.001 | Create new item", () => {
 
             await expect(error).toContainText('is an unsafe character');
         });
-    }
+    };
 });
+        

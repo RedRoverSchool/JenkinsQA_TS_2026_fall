@@ -9,5 +9,6 @@ export const jenkinsData = {
         ItemType.MultiConfigurationProject, 
         ItemType.Folder, 
         ItemType.MultibranchPipeline, 
-        ItemType.OrganizationFolder],
+        ItemType.OrganizationFolder
+    ],
 };
