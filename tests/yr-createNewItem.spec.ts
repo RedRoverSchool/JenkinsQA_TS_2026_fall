@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@/base";
-import { invalidChars, jenkinsData } from "./testData/yr-data";
+import { jenkinsData } from "./testData/yr-data";
 import { Locator } from "@playwright/test";
 
 test.describe("US_01.001 | Create new item", () => {
@@ -21,10 +21,23 @@ test.describe("US_01.001 | Create new item", () => {
 
         const errorMessage: Locator = page.locator(".jenkins-form-item .error");
 
-        for (const char of invalidChars) {
+        for (const char of jenkinsData.invalidChars) {
             await page.locator("#name").fill(char);
 
             await expect.soft(errorMessage).toHaveText(`‘${char}’ is an unsafe character`);
+        }
+    });
+
+    test("TC_01.001.13 | OK button is disabled when item name contains unsupported special characters", async ({ page }: { page: Page }) => {
+        await page.locator("#side-panel a[href$=newJob]").click();
+        await page.locator(".org_jenkinsci_plugins_workflow_job_WorkflowJob").click();
+        
+        const okButton: Locator = page.locator("#ok-button");
+
+        for (const char of jenkinsData.invalidChars) {
+            await page.locator("#name").fill(char);
+
+            await expect.soft(okButton).toBeDisabled();
         }
     });
 });

@@ -2,7 +2,8 @@ import { test, expect, Page } from "@/base";
 import { jenkinsData } from "./testData/as-data";
 
 test.describe("US_02.003 | Configure SCM", () => {
-    test.only("TC_02.003.01 | Verify SCM section is available", async ({ page }) => {
+
+    test("TC_02.003.01 | Verify SCM section is available", async ({ page }) => {
         const expectedLabels = {
             header: 'Source Code Management',
             description: 'Connect and manage your code repository to automatically pull the latest code for your builds.',
@@ -19,7 +20,9 @@ test.describe("US_02.003 | Configure SCM", () => {
         await page.getByRole('link', { name: 'Configure' }).click();
 
         const section = page.locator('section.jenkins-section').first();
+
         section.locator('.jenkins-section__description').waitFor({ state: 'visible' });
+
         const actualLabels = {
             header: (await section.locator('.jenkins-section__title').textContent())?.trim(),
             description: await section.locator('.jenkins-section__description').innerText(),
