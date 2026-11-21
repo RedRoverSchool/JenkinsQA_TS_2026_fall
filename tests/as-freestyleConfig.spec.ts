@@ -20,14 +20,20 @@ test.describe("US_02.003 | Configure SCM", () => {
 
         const section = page.locator('section.jenkins-section').first();
 
-        const actualLabels = {
-            header: (await section.locator('.jenkins-section__title').textContent())?.trim(),
-            description: await section.locator('.jenkins-section__description').innerText(),
-            none: await section.locator('label').filter({ hasText: 'None' }).innerText(),
-            git: await section.locator('label').filter({ hasText: 'Git' }).innerText(),
-        };
+        const header = section.locator('.jenkins-section__title');
+        const description = section.locator('.jenkins-section__description');
+        const none = section.locator('label').filter({ hasText: 'None' });
+        const git = section.locator('label').filter({ hasText: 'Git' });
 
-        expect(actualLabels).toEqual(expectedLabels);
+        for (const [locator, text] of [
+            [header, expectedLabels.header],
+            [description, expectedLabels.description],
+            [none, expectedLabels.none],
+            [git, expectedLabels.git],
+        ] as const) {
+            await expect(locator).toBeVisible();
+            await expect(locator).toHaveText(text, { useInnerText: true });
+        }
     });
 
     test('TC_02.003.02 | Verify available SCM types', async ({ page }) => {
