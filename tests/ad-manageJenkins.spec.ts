@@ -8,4 +8,11 @@ test.describe("US_10.001 | Manage Jenkins", () => {
 
         await expect(page.locator("#root-action-ManageJenkinsAction:hover")).toBeVisible();
     });
+
+     test("TC_10.001.02 | Verify redirect to Management page", async ({ page }) => {
+
+        await page.locator("#root-action-ManageJenkinsAction").click();
+
+        await expect(page.getByRole("heading", { name: "Project Configuration" })).toBeVisible();
+    });
 });
