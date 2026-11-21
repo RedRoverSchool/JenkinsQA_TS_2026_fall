@@ -5,19 +5,25 @@ test.describe("US_02.001 | Enable or Disable Project", () => {
   test("TC_02.001.03 | Verify dropdown configure option", async ({ page }) => {
     await page.locator("span.task-link-text").filter({ hasText: "New Item" }).click();
     await page.locator("#name").fill(jenkinsData.itemName);
-    await page.locator(".jenkins-choice-list__item__label").filter({ hasText: "Freestyle project" }).click();
+    await page.getByText("Freestyle project", { exact: true }).click();
     await page.getByRole("button", { name: "Ok" }).click();
 
     await page.locator(".app-jenkins-logo").click();
-    const itemLocator = page.locator(`#job_${jenkinsData.itemName} .jenkins-table__link`);
+    const itemLocator = page.locator("#projectstatus  .jenkins-table__link").filter({ hasText: jenkinsData.itemName });
+
     await itemLocator.hover();
     //verify that the browser considers the element hovered
     await expect.poll(() => itemLocator.evaluate((el) => el.matches(":hover"))).toBe(true);
 
     await itemLocator.locator("button").click();
 
-    const popUopLocator = page.locator("#tippy-4 .jenkins-dropdown");
-    const popUpInnerTexts = await popUopLocator.locator("a,  button").allInnerTexts();
-    expect(popUpInnerTexts).toContain(jenkinsData.jobPopUpOptions);
+    const dropdown = page.locator(".jenkins-dropdown:visible");
+    await expect(dropdown).toHaveCount(1);
+
+    const dropdownOptions = await dropdown.locator("a, button").allInnerTexts();
+
+    await expect(dropdownOptions.map((text) => text.trim()).sort()).toEqual(
+      [...Object.values(jenkinsData.jobPopUpOptions)].sort(),
+    );
   });
 });
