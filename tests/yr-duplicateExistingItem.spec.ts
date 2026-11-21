@@ -3,7 +3,7 @@ import { jenkinsData } from "./testData/yr-data";
 import { Locator } from "@playwright/test";
 
 test.describe("US_01.003 | Duplicate an existing item", () => {
-    test.beforeEach(async ({ page }: { page: Page }) => {
+    test.beforeEach("Create a source item", async ({ page }: { page: Page }) => {
         await page.getByRole("link", { name: "New Item" }).click();
         await page.locator("#name").fill(jenkinsData.sourceItemName);
         await page.locator(".org_jenkinsci_plugins_workflow_job_WorkflowJob").click();
@@ -40,4 +40,30 @@ test.describe("US_01.003 | Duplicate an existing item", () => {
 
         expect(itemNameArr).not.toContain(jenkinsData.itemName);
     });
+});
+
+test.describe("US_01.003 | Duplicate an existing item (all types)", () => {
+    for (const itemType of jenkinsData.itemTypeNames) {
+        test(`TC_01.003.06 | Verify that duplicate can be created for ${itemType}`, async ({ page }: { page: Page }) => {
+            await page.getByRole("link", { name: "New Item" }).click();
+            await page.locator("#name").fill(jenkinsData.sourceItemName);
+            await page.getByText(itemType, { exact: true }).click();
+            await page.getByRole("button", { name: "OK" }).click();
+            await page.locator("a.app-jenkins-logo").click();
+
+            await page.getByRole("link", { name: "New Item" }).click();
+            await page.locator("#name").fill(jenkinsData.itemName);
+            await page.locator("#duplicate-job").click();
+            await page.getByPlaceholder("Type to autocomplete").fill(jenkinsData.sourceItemName);
+            await page.locator(".jenkins-dropdown__item").filter({ hasText: jenkinsData.sourceItemName }).click();
+            await page.getByRole("button", { name: "OK" }).click();
+            await page.locator("a.app-jenkins-logo").click();
+
+            const itemLinks: Locator = page.locator("#projectstatus .jenkins-table__link");
+            await itemLinks.first().waitFor();
+            const itemNameArr: string[] = await itemLinks.allInnerTexts();
+            
+            expect(itemNameArr).toContain(jenkinsData.itemName);
+        });
+    }
 });
