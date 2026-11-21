@@ -13,6 +13,6 @@ test.describe("US_10.001 | Manage Jenkins", () => {
 
         await page.locator("#root-action-ManageJenkinsAction").click();
 
-        await expect(page.getByRole("heading", { name: "Project Configuration" })).toBeVisible();
+        await expect(page.getByRole("heading", { name: "System Configuration" })).toBeVisible();
     });
 });
