@@ -18,6 +18,6 @@ test.describe("US_16.008 | Delete project", () => {
     
         await popupLocator.getByText(jenkinsData.jobPopupOptions.deleteProject).click();
         await page.locator("button[data-id='ok']").click();
-        expect(page.getByRole('heading', { level: 1, name: 'Welcome to Jenkins!' })).toBeVisible()
+        await expect(page.getByRole('heading', { level: 1, name: 'Welcome to Jenkins!' })).toBeVisible();
     });
 })
