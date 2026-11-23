@@ -74,11 +74,27 @@ test.describe("US_02.003 | Configure SCM", () => {
         const credentials = section.locator("select[name='_.credentialsId']");
         const branchSpecifier = section.locator(".jenkins-form-item").filter({ hasText: /^Branch Specifier/ }).locator("input");
 
-        await expect(repositoryUrl).toBeVisible();
-        await expect(repositoryUrl).toBeEnabled();
-        await expect(credentials).toBeVisible();
-        await expect(credentials).toBeEnabled();
-        await expect(branchSpecifier).toBeVisible();
-        await expect(branchSpecifier).toBeEnabled();
+        const expectedFields = {
+            repositoryUrl: { visible: true, enabled: true },
+            credentials: { visible: true, enabled: true },
+            branchSpecifier: { visible: true, enabled: true },
+        };
+
+        const actualFields = async () => ({
+            repositoryUrl: {
+                visible: await repositoryUrl.isVisible(),
+                enabled: await repositoryUrl.isEnabled(),
+            },
+            credentials: {
+                visible: await credentials.isVisible(),
+                enabled: await credentials.isEnabled(),
+            },
+            branchSpecifier: {
+                visible: await branchSpecifier.isVisible(),
+                enabled: await branchSpecifier.isEnabled(),
+            },
+        });
+
+        await expect.poll(actualFields).toEqual(expectedFields);
     });
 });
