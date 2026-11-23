@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-export const jenkinsData = {
+export const jenkinsData = { 
     itemName: faker.hacker.noun(),
 
 };
