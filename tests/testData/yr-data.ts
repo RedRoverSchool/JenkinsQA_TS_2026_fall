@@ -4,4 +4,5 @@ export const jenkinsData = {
     sourceItemDescription: "source item description",
     nonExistingItemName: "Non-Existing Item",
     invalidChars: ["/", "!", "%", "$", "&", ";", ":"],
+    itemTypeNames: ["Pipeline", "Freestyle project", "Multi-configuration project", "Folder", "Multibranch Pipeline", "Organization Folder"],
 };
