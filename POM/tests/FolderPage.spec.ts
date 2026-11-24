@@ -2,7 +2,7 @@ import { test, expect, App, ItemCreationFixtures, ItemType } from "@/POM/fixture
 import { Page } from "@/base";
 import { folderPageData } from "../testData/folderPageData";
 
-test.describe.only("US_01.002 | Folder", () => {
+test.describe("US_01.002 | Folder", () => {
 	test("TC_01.002.02 | Verify folder creation with Display Name", 
 		async ({ app, createNewItem }
 			: { app: App; } & ItemCreationFixtures) => {
