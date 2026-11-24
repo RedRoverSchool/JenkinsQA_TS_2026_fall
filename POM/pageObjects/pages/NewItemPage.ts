@@ -4,6 +4,8 @@ import { ItemType } from "@/POM/fixtures/itemCreationFixtures";
 export class NewItemPage extends BasePage {
 	itemNameField = () => this.page.locator("#name");
 
+	validationMessage = () => this.page.locator(".error");
+
 	itemType = (itemType: ItemType) => this.page.getByText(itemType, { exact: true });
 
 	okButton = () => this.page.locator("#ok-button");
@@ -21,4 +23,9 @@ export class NewItemPage extends BasePage {
 	async clickOkButton(): Promise<void> {
 		await this.okButton().click();
 	}
+
+	async submitFormByKeyboard(): Promise<void> {
+		await this.page.press("#createItem", "Enter");
+	}
+	
 }

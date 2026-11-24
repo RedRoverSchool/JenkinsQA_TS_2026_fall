@@ -11,4 +11,5 @@ export const newItemPageData = {
 		ItemType.MultibranchPipeline, 
 		ItemType.OrganizationFolder
 	],
+	unsafeCharacters : ['/', '!', '%', '$', '&', ';', ':', '@'],
 };
