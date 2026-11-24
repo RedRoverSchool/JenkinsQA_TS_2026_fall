@@ -6,6 +6,7 @@ import { ConfigureFolderPage } from "./pages/ConfigurePage/ConfigureFolderPage";
 import { ConfigureMultibranchPipelinePage } from "./pages/ConfigurePage/ConfigureMultibranchPipelinePage";
 import { ConfigureMultiConfigurationPage } from "./pages/ConfigurePage/ConfigureMultiConfigurationProjectPage";
 import { ConfigureOrganizationFolderPage } from "./pages/ConfigurePage/ConfigureOrganizationFolderPage";
+import { FolderPage } from "./pages/FolderPage";
 
 export class App {
 	private _homePage: HomePage | null = null;
@@ -16,6 +17,8 @@ export class App {
 	private _configureFolderPage: ConfigureFolderPage | null = null;
 	private _configurePipelinePage: ConfigureMultibranchPipelinePage | null = null;
 	private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
+	private _folderPage: FolderPage | null = null;
+
 
 	constructor(private readonly page: Page) {}
 
@@ -49,5 +52,9 @@ export class App {
 
 	get configureOrganizationFolderPage() {
 		return (this._configureOrganizationFolderPage ??= new ConfigureOrganizationFolderPage(this.page));
+	}
+	
+	get folderPage() {
+		return (this._folderPage ??= new FolderPage(this.page));
 	}
 }

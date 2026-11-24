@@ -1,8 +1,8 @@
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
-export class BasePage {
+export abstract class BasePage {
 	private _header: Header | null = null;
 	private _footer: Footer | null = null;
 
@@ -14,5 +14,9 @@ export class BasePage {
 
 	get footer() {
 		return (this._footer ??= new Footer(this.page));
+	}
+
+	async verifyUrl(regExpr: RegExp) {
+		expect(this.page).toHaveURL(regExpr);
 	}
 }

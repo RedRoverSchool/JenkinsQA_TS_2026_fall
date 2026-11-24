@@ -7,6 +7,8 @@ export class NewItemPage extends BasePage {
 	validationMessage = () => this.page.locator(".error");
 
 	itemType = (itemType: ItemType) => this.page.getByText(itemType, { exact: true });
+	freestyleProjectType = () => this.page.locator(".hudson_model_FreeStyleProject");
+	folderType = () => this.page.locator(".com_cloudbees_hudson_plugins_folder_Folder");
 
 	okButton = () => this.page.locator("#ok-button");
 
@@ -17,6 +19,11 @@ export class NewItemPage extends BasePage {
 
 	async clickItemType(itemType: ItemType): Promise<this> {
 		await this.itemType(itemType).click();
+		return this;
+	}
+
+	async clickFolderType(): Promise<this> {
+		await this.folderType().click();
 		return this;
 	}
 

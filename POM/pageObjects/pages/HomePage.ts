@@ -11,7 +11,7 @@ export class HomePage extends BasePage {
 		await this.newItemLink().click();
 	}
 
-	async clickOnItemWithName(itemName: string): Promise<void> {
+	async clickOnItemTypeWithName(itemName: string): Promise<void> {
 		await this.itemLinkWithName(itemName).click();
 	}
 }
