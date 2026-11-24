@@ -13,6 +13,7 @@ export interface ItemCreationFixtures {
 
     selectItemType: (itemType: ItemType) => Promise<void>;
     createNewItem: (itemName: string, itemType: ItemType) => Promise<void>;
+    saveConfiguration: () => Promise<void>;
 
 };
 
@@ -34,10 +35,19 @@ export const test = base.extend<ItemCreationFixtures>({
             await selectItemType(itemType);
             await page.press("#createItem", "Enter");
 
-            await naviateToHomePage()
         };
 
         await use(createWithName);
+    },
+
+        saveConfiguration: async ({ page, naviateToHomePage, selectItemType }: { page: Page } & NavigationFixtures & ItemCreationFixtures, use) => {
+
+        const saveConfigrationByButton: ItemCreationFixtures["saveConfiguration"] = async () => {
+
+            await page.getByRole("button", { name: "Save" }).click();
+        };
+
+        await use(saveConfigrationByButton);
     },
 
 });
