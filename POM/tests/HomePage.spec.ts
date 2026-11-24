@@ -1,16 +1,27 @@
-import { test, expect, App } from "@/POM/fixtures/baseFixture";
 import { newItemPageData } from "../testData/newItemPageData";
+import { NavigationFixtures } from "@/POM/fixtures/navigationFixtures";
+import { test, expect, App, ItemCreationFixtures, ItemType } from "@/POM/fixtures/itemCreationFixtures";
+import { ConfigurePage } from "@/POM/pageObjects/pages/ConfigurePage/ConfigurePage";
 
-test.describe("US_01.001 | Create new item", () => {
-	test("TC_01.001.01 | Verify item creation", async ({ app }: { app: App }) => {
-		await app.homePage.clickNewItemLink();
+const uniqueItemName = newItemPageData.itemName
+newItemPageData.itemTypes.forEach((itemType: ItemType) => {
+	test.describe(`US_01.001 | Create new  ${itemType} item `, () => {
+		test("TC_01.001.01 | Verify item creation", 
+			async ({ app, navigateToHomePageFrom, createNewItem }
+			: { app: App } & NavigationFixtures & ItemCreationFixtures) => {
 
-		await app.newItemPage.fillItemNameField(newItemPageData.itemName);
-		await app.newItemPage.clickFreestyleProjectType();
-		await app.newItemPage.clickOkButton();
+			const configurePage = await createNewItem(uniqueItemName, itemType);
+			await navigateToHomePageFrom(configurePage);
 
-		await app.configureFreestylePage.header.clickLogo();
-
-		await expect(app.homePage.projectStatusItemName()).toHaveText(newItemPageData.itemName);
+			await expect(app.homePage.projectStatusItemName()).toHaveText(newItemPageData.itemName);
+		});
+			
+		test(`TC_01.001.03 | Verify ${itemType} item creation`, async ({ app, createNewItem, navigateToHomePageFrom }
+				: { app: App } & ItemCreationFixtures & NavigationFixtures
+			) => {
+			const configurePage = await createNewItem(uniqueItemName, itemType);
+			await navigateToHomePageFrom(configurePage);
+			await expect(app.homePage.projectStatusItemName()).toHaveCount(1);			
+		});
 	});
 });

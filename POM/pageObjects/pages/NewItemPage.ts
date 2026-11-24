@@ -1,8 +1,11 @@
 import { BasePage } from "./@components";
+import { ItemType } from "@/POM/fixtures/itemCreationFixtures";
 
 export class NewItemPage extends BasePage {
 	itemNameField = () => this.page.locator("#name");
-	freestyleProjectType = () => this.page.locator(".hudson_model_FreeStyleProject");
+
+	itemType = (itemType: ItemType) => this.page.getByText(itemType, { exact: true });
+
 	okButton = () => this.page.locator("#ok-button");
 
 	async fillItemNameField(name: string): Promise<this> {
@@ -10,8 +13,8 @@ export class NewItemPage extends BasePage {
 		return this;
 	}
 
-	async clickFreestyleProjectType(): Promise<this> {
-		await this.freestyleProjectType().click();
+	async clickItemType(itemType: ItemType): Promise<this> {
+		await this.itemType(itemType).click();
 		return this;
 	}
 
