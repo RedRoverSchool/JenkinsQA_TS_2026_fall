@@ -11,5 +11,13 @@ export const newItemPageData = {
 		ItemType.MultibranchPipeline, 
 		ItemType.OrganizationFolder
 	],
+	dashboardItems: new Map([		
+		[ItemType.FreestyleProject, faker.word.noun()], 
+		[ItemType.Pipeline, faker.word.noun()],
+		[ItemType.MultiConfigurationProject, faker.word.noun()],
+		[ItemType.Folder, faker.word.noun()],
+		[ItemType.MultibranchPipeline, faker.word.noun()], 
+		[ItemType.OrganizationFolder,  faker.word.noun()]
+	]),
 	unsafeCharacters : ['/', '!', '%', '$', '&', ';', ':', '@'],
 };

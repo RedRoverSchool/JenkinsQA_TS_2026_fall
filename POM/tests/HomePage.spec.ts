@@ -5,8 +5,8 @@ import { ConfigurePage } from "@/POM/pageObjects/pages/ConfigurePage/ConfigurePa
 
 const uniqueItemName = newItemPageData.itemName
 newItemPageData.itemTypes.forEach((itemType: ItemType) => {
-	test.describe(`US_01.001 | Create new  ${itemType} item `, () => {
-		test("TC_01.001.01 | Verify item creation", 
+	test.describe(`US_01.001 | Create new ${itemType} item `, () => {
+		test(`TC_01.001.01 | Verify  ${itemType} item creation`, 
 			async ({ app, navigateToHomePageFrom, createNewItem }
 			: { app: App } & NavigationFixtures & ItemCreationFixtures) => {
 
@@ -24,4 +24,25 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 			await expect(app.homePage.projectStatusItemName()).toHaveCount(1);			
 		});
 	});
+
+	test.describe(`US_20.001 | Open ${itemType} from Dashboard`, () => {
+	
+		test(`TC_POM_20.001.01 | Verify few ${itemType} names are visible on the Dashboard`, 
+			async ({ app, createNewItem, navigateToHomePageFrom }
+				: { app: App } & ItemCreationFixtures & NavigationFixtures
+			) => {
+			
+			for(const [itemType, itemName] of newItemPageData.dashboardItems) {
+				const configurePage = await createNewItem(itemName, itemType);
+				await navigateToHomePageFrom(configurePage);
+			}
+
+			const configurePage = await createNewItem(uniqueItemName, itemType);
+			await navigateToHomePageFrom(configurePage);
+
+			await expect(app.homePage.itemLinkWithName(uniqueItemName)).toHaveCount(1);
+			await expect(app.homePage.itemLinkWithName(uniqueItemName)).toHaveText(newItemPageData.itemName);
+		});
+	});
 });
+
