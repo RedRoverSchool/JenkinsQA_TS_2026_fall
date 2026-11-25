@@ -13,7 +13,7 @@ export enum ItemType {
 
 export interface ItemCreationFixtures {
 
-    createNewItem: (itemName: string, itemType: ItemType, submitByKeyboard?: boolean) => Promise<ConfigurePage>;
+    createNewItem: (itemName?: string, itemType?: ItemType, submitByKeyboard?: boolean) => Promise<ConfigurePage>;
 
 };
 
@@ -21,7 +21,11 @@ export const test = base.extend<ItemCreationFixtures>({
 
     createNewItem: async ({ app }: { app: App } & NavigationFixtures & ItemCreationFixtures, use) => {
 
-        const createWithName: ItemCreationFixtures["createNewItem"] = async (itemName: string, itemType: ItemType, submitByKeyboard=false) => {
+        const createWithName: ItemCreationFixtures["createNewItem"] = async (
+                    itemName: string = `item-${Date.now()}`, 
+                    itemType: ItemType = ItemType.FreestyleProject, 
+                    submitByKeyboard = false) => 
+        {
             await app.homePage.clickNewItemLink();
             await app.newItemPage.fillItemNameField(itemName);
             await app.newItemPage.clickItemType(itemType);

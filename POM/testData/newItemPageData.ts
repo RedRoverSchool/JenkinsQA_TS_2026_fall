@@ -11,7 +11,7 @@ export const newItemPageData = {
 		ItemType.MultibranchPipeline, 
 		ItemType.OrganizationFolder
 	],
-	dashboardItems: new Map([		
+	dashboardItemsNames: new Map([		
 		[ItemType.FreestyleProject, faker.word.noun()], 
 		[ItemType.Pipeline, faker.word.noun()],
 		[ItemType.MultiConfigurationProject, faker.word.noun()],

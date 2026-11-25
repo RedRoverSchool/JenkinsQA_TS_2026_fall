@@ -27,6 +27,18 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 		
 	});
 
+	test.describe(`US_16.001 | Access to the ${itemType} from the Dashboard`, () => {
+		test("TC_16.001.01 | Verify few Projects' names are visible on the Dashboard",
+				async ({ app, createNewItem, navigateToHomePageFrom }
+				: { app: App } & ItemCreationFixtures & NavigationFixtures
+			) => {
+			const configurePage = await createNewItem(newItemPageData.dashboardItemsNames.get(ItemType.Folder), ItemType.Folder);
+			await navigateToHomePageFrom(configurePage);
+
+			await expect(app.homePage.projectStatusItemName()).toHaveCount(2);
+		});
+	});
+	
 	test.describe(`US_20.001 | Open ${itemType} from Dashboard`, () => {
 	
 		test(`TC_POM_20.001.01 | Verify few ${itemType} names are visible on the Dashboard`, 
@@ -34,7 +46,7 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 				: { app: App } & ItemCreationFixtures & NavigationFixtures
 			) => {
 			
-			for(const [itemType, itemName] of newItemPageData.dashboardItems) {
+			for(const [itemType, itemName] of newItemPageData.dashboardItemsNames) {
 				const configurePage = await createNewItem(itemName, itemType);
 				await navigateToHomePageFrom(configurePage);
 			}
