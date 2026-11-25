@@ -3,6 +3,7 @@ import { HomePage } from "./pages/HomePage";
 import { NewItemPage } from "./pages/NewItemPage";
 import { ConfigureFreestylePage } from "./pages/ConfigurePage/ConfigureFreestylePage";
 import { ConfigureFolderPage } from "./pages/ConfigurePage/ConfigureFolderPage";
+import { ConfigurePipelinePage } from "./pages/ConfigurePage/ConfigurePipelinePage";
 import { ConfigureMultibranchPipelinePage } from "./pages/ConfigurePage/ConfigureMultibranchPipelinePage";
 import { ConfigureMultiConfigurationPage } from "./pages/ConfigurePage/ConfigureMultiConfigurationProjectPage";
 import { ConfigureOrganizationFolderPage } from "./pages/ConfigurePage/ConfigureOrganizationFolderPage";
@@ -15,7 +16,7 @@ export class App {
 	private _configureMultibranchPipelinePage: ConfigureMultibranchPipelinePage | null = null;
 	private _configureMultiConfigurationPage: ConfigureMultiConfigurationPage | null = null;
 	private _configureFolderPage: ConfigureFolderPage | null = null;
-	private _configurePipelinePage: ConfigureMultibranchPipelinePage | null = null;
+	private _configurePipelinePage: ConfigurePipelinePage | null = null;
 	private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
 	private _folderPage: FolderPage | null = null;
 

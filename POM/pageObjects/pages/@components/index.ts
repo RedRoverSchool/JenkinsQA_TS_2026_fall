@@ -17,6 +17,6 @@ export abstract class BasePage {
 	}
 
 	async verifyUrl(regExpr: RegExp) {
-		expect(this.page).toHaveURL(regExpr);
+		await expect(this.page).toHaveURL(regExpr);
 	}
 }
