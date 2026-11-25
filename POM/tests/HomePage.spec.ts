@@ -1,7 +1,7 @@
 import { newItemPageData } from "../testData/newItemPageData";
 import { NavigationFixtures } from "@/POM/fixtures/navigationFixtures";
-import { test, expect, App, ItemCreationFixtures, ItemType } from "@/POM/fixtures/itemCreationFixtures";
-import { ConfigurePage } from "@/POM/pageObjects/pages/ConfigurePage/ConfigurePage";
+import { test, expect, App, ItemCreationFixtures } from "@/POM/fixtures/itemCreationFixtures";
+import { ItemType } from "../testData/newItemPageData";
 
 const uniqueItemName = newItemPageData.itemName
 newItemPageData.itemTypes.forEach((itemType: ItemType) => {
@@ -10,7 +10,7 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 			async ({ app, navigateToHomePageFrom, createNewItem }
 			: { app: App } & NavigationFixtures & ItemCreationFixtures) => {
 
-			const configurePage = await createNewItem(uniqueItemName, itemType);
+			const configurePage = await createNewItem(itemType, uniqueItemName);
 			await navigateToHomePageFrom(configurePage);
 
 			await expect(app.homePage.projectStatusItemName()).toHaveText(newItemPageData.itemName);
@@ -19,7 +19,7 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 		test(`TC_01.001.03 | Verify ${itemType} item creation`, async ({ app, createNewItem, navigateToHomePageFrom }
 				: { app: App } & ItemCreationFixtures & NavigationFixtures
 			) => {
-			const configurePage = await createNewItem(uniqueItemName, itemType);
+			const configurePage = await createNewItem(itemType, uniqueItemName );
 			await navigateToHomePageFrom(configurePage);
 			await expect(app.homePage.projectStatusItemName()).toHaveCount(1);			
 		});
@@ -32,13 +32,15 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 				async ({ app, createNewItem, navigateToHomePageFrom }
 				: { app: App } & ItemCreationFixtures & NavigationFixtures
 			) => {
-			const configurePage = await createNewItem(newItemPageData.dashboardItemsNames.get(ItemType.Folder), ItemType.Folder);
-			await navigateToHomePageFrom(configurePage);
+			const firstItemConfigurePage = await createNewItem(itemType);
+			await navigateToHomePageFrom(firstItemConfigurePage);
+			const secondItemConfigurePage = await createNewItem(itemType);
+			await navigateToHomePageFrom(secondItemConfigurePage);
 
 			await expect(app.homePage.projectStatusItemName()).toHaveCount(2);
 		});
 	});
-	
+
 	test.describe(`US_20.001 | Open ${itemType} from Dashboard`, () => {
 	
 		test(`TC_POM_20.001.01 | Verify few ${itemType} names are visible on the Dashboard`, 
@@ -47,11 +49,11 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 			) => {
 			
 			for(const [itemType, itemName] of newItemPageData.dashboardItemsNames) {
-				const configurePage = await createNewItem(itemName, itemType);
+				const configurePage = await createNewItem(itemType, itemName);
 				await navigateToHomePageFrom(configurePage);
 			}
 
-			const configurePage = await createNewItem(uniqueItemName, itemType);
+			const configurePage = await createNewItem(itemType, uniqueItemName);
 			await navigateToHomePageFrom(configurePage);
 
 			await expect(app.homePage.itemLinkWithName(uniqueItemName)).toHaveCount(1);

@@ -1,8 +1,17 @@
 import { faker } from "@faker-js/faker";
-import { ItemType } from "@/POM/fixtures/itemCreationFixtures";
+
+export enum ItemType {
+	FreestyleProject = "Freestyle project",
+	Pipeline = "Pipeline",
+	MultiConfigurationProject = "Multi-configuration project",
+	Folder = "Folder",
+	MultibranchPipeline = "Multibranch Pipeline",
+	OrganizationFolder = "Organization Folder"
+}
 
 export const newItemPageData = {
 	itemName: faker.word.noun(),
+	timestampItemName: () => {return `item-${Date.now()}`},
 	itemTypes: [
 		ItemType.FreestyleProject, 
 		ItemType.Pipeline, 

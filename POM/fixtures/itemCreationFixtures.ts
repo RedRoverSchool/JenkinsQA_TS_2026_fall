@@ -1,19 +1,14 @@
 import { test as base, NavigationFixtures, App } from "./navigationFixtures"
 import { ConfigurePage } from "@/POM/pageObjects/pages/ConfigurePage/ConfigurePage";
+import { ItemType, newItemPageData } from "../testData/newItemPageData";
 
 
-export enum ItemType {
-    FreestyleProject = "Freestyle project",
-    Pipeline = "Pipeline",
-    MultiConfigurationProject = "Multi-configuration project",
-    Folder = "Folder",
-    MultibranchPipeline = "Multibranch Pipeline",
-    OrganizationFolder = "Organization Folder"
-}
+
+
 
 export interface ItemCreationFixtures {
 
-    createNewItem: (itemName?: string, itemType?: ItemType, submitByKeyboard?: boolean) => Promise<ConfigurePage>;
+    createNewItem: ( itemType: ItemType, itemName?: string, submitByKeyboard?: boolean) => Promise<ConfigurePage>;
 
 };
 
@@ -22,8 +17,8 @@ export const test = base.extend<ItemCreationFixtures>({
     createNewItem: async ({ app }: { app: App } & NavigationFixtures & ItemCreationFixtures, use) => {
 
         const createWithName: ItemCreationFixtures["createNewItem"] = async (
-                    itemName: string = `item-${Date.now()}`, 
-                    itemType: ItemType = ItemType.FreestyleProject, 
+                    itemType: ItemType,
+                    itemName: string = newItemPageData.timestampItemName(), 
                     submitByKeyboard = false) => 
         {
             await app.homePage.clickNewItemLink();

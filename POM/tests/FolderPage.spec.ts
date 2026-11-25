@@ -1,5 +1,5 @@
-import { test, expect, App, ItemCreationFixtures, ItemType } from "@/POM/fixtures/itemCreationFixtures";
-import { Page } from "@/base";
+import { test, expect, App, ItemCreationFixtures } from "@/POM/fixtures/itemCreationFixtures";
+import { ItemType } from "../testData/newItemPageData";
 import { folderPageData } from "../testData/folderPageData";
 
 test.describe("US_01.002 | Folder", () => {
