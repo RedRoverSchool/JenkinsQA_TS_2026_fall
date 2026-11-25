@@ -1,5 +1,5 @@
 import { BasePage } from "./@components";
-import { ItemType } from "@/POM/fixtures/itemCreationFixtures";
+import { ItemType } from "../../testData/newItemPageData";
 
 export class NewItemPage extends BasePage {
 	itemNameField = () => this.page.locator("#name");
