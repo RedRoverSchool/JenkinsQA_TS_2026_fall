@@ -23,5 +23,28 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 			await navigateToHomePageFrom(configurePage);
 			await expect(app.homePage.projectStatusItemName()).toHaveCount(1);			
 		});
+
+		test("TC_01.002.12 | Verify deleting a folder", async ({ app, createNewItem } : { app: App } &  ItemCreationFixtures) => {
+		
+	    await createNewItem(ItemType.Folder, ItemType.Folder);	
+		await app.configureFolderPage.clickSaveButton();
+		await app.folderPage.clickDeleteFolderButton();
+		await app.folderPage.clickConfirmDeleteButton();
+
+		await expect(app.homePage.projectStatusItemName()).not.toBeVisible();		
+	});
+	});
+});
+
+test.describe("US_01.002 | Folder", () => {
+	test("TC_01.002.12 | Verify deleting a folder", async ({ app, createNewItem } 
+			: { app: App } &  ItemCreationFixtures) => {
+		
+	    await createNewItem(ItemType.Folder, ItemType.Folder);	
+		await app.configureFolderPage.clickSaveButton();
+		await app.folderPage.clickDeleteFolderButton();
+		await app.folderPage.clickConfirmDeleteButton();
+
+		await expect(app.homePage.projectStatusItemName()).not.toBeVisible();		
 	});
 });
