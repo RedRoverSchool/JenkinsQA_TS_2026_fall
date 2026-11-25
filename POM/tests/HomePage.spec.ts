@@ -26,19 +26,6 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 
 		
 	});
-});
-
-test.describe("US_01.002 | Folder", () => {
-	test("TC_01.002.12 | Verify deleting a folder", async ({ app, createNewItem } 
-			: { app: App } &  ItemCreationFixtures) => {
-		
-	    await createNewItem(ItemType.Folder, ItemType.Folder);	
-		await app.configureFolderPage.clickSaveButton();
-		await app.folderPage.clickDeleteFolderButton();
-		await app.folderPage.clickConfirmDeleteButton();
-
-		await expect(app.homePage.projectStatusItemName()).not.toBeVisible();		
-	});
 
 	test.describe(`US_20.001 | Open ${itemType} from Dashboard`, () => {
 	
@@ -59,5 +46,19 @@ test.describe("US_01.002 | Folder", () => {
 			await expect(app.homePage.itemLinkWithName(uniqueItemName)).toHaveText(newItemPageData.itemName);
 		});
 	});
+});
+
+test.describe("US_01.002 | Folder", () => {
+	test("TC_01.002.12 | Verify deleting a folder", async ({ app, createNewItem } 
+			: { app: App } &  ItemCreationFixtures) => {
+		
+	    await createNewItem(ItemType.Folder, ItemType.Folder);	
+		await app.configureFolderPage.clickSaveButton();
+		await app.folderPage.clickDeleteFolderButton();
+		await app.folderPage.clickConfirmDeleteButton();
+
+		await expect(app.homePage.projectStatusItemName()).not.toBeVisible();		
+	});
+
 });
 
