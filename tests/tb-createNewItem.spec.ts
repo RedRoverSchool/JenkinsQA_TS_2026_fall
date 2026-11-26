@@ -13,12 +13,20 @@ await page.locator("#ok-button").click();
 
 await page.locator(".app-jenkins-logo").click();
 
-const itemslocator = page.locator("#projectstatus .jenkins-table__link");
+//const itemslocator = page.locator("#projectstatus .jenkins-table__link");
 
-await expect(itemslocator).toHaveText(jenkinsData.itemName);
+//await expect(itemslocator).toHaveText(jenkinsData.itemName);
+
+const createdItem = page.locator(".dashboard").getByRole(
+    "link",{
+             name:jenkinsData.itemName,
+             exact : true, 
 
     });
+await expect (createdItem).toBeVisible(); 
 
+    });
 });
+
 
 
