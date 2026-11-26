@@ -2,6 +2,8 @@ import { newItemPageData } from "../testData/newItemPageData";
 import { NavigationFixtures } from "@/POM/fixtures/navigationFixtures";
 import { test, expect, App, ItemCreationFixtures, ItemType } from "@/POM/fixtures/itemCreationFixtures";
 import { ConfigurePage } from "@/POM/pageObjects/pages/ConfigurePage/ConfigurePage";
+import { multibranchPipelinePageData } from "../testData/multibranchPipelineRenamePageData";
+
 
 const uniqueItemName = newItemPageData.itemName
 newItemPageData.itemTypes.forEach((itemType: ItemType) => {
@@ -58,6 +60,21 @@ test.describe("US_01.002 | Folder", () => {
 		await app.folderPage.clickConfirmDeleteButton();
 
 		await expect(app.homePage.projectStatusItemName()).not.toBeVisible();		
+	});
+
+});
+
+test.describe("US_06.002 | Multibranch-pipeline Configuration | Rename ", () => {
+	test("TC_POM_06-002-01-Multibranch-pipeline-Rename", async ({ app, createNewItem } 
+			: { app: App } &  ItemCreationFixtures ) => {
+		
+	    await createNewItem(uniqueItemName, ItemType.MultibranchPipeline);		
+		await app.configureMultibranchPipelinePage.clickSaveButton();
+		await app.multibranchPipelinePage.clickRenameButton();
+		await app.multibranchPipelineRenamePage.fillNewNameField(multibranchPipelinePageData.newName);
+		await app.multibranchPipelineRenamePage.clickRenameButton();
+		await app.multibranchPipelineRenamePage.header.clickLogo();
+		await expect(app.homePage.projectStatusItemName()).toHaveText(multibranchPipelinePageData.newName);		
 	});
 
 });
