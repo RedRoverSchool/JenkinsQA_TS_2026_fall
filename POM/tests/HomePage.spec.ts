@@ -1,7 +1,6 @@
-import { newItemPageData } from "../testData/newItemPageData";
+import { newItemPageData, ItemType } from "../testData/newItemPageData";
 import { NavigationFixtures } from "@/POM/fixtures/navigationFixtures";
 import { test, expect, App, ItemCreationFixtures } from "@/POM/fixtures/itemCreationFixtures";
-import { ItemType } from "../testData/newItemPageData";
 
 
 newItemPageData.itemTypes.forEach((itemType: ItemType) => {
@@ -70,8 +69,8 @@ test.describe("US_01.002 | Folder", () => {
 	test("TC_01.002.12 | Verify deleting a folder", async ({ app, createNewItem } 
 			: { app: App } &  ItemCreationFixtures) => {
 		
-	    await createNewItem(ItemType.Folder, ItemType.Folder);	
-		await app.configureFolderPage.clickSaveButton();
+	    const configurePage = await createNewItem(ItemType.Folder, newItemPageData.dashboardItemsNames.get(ItemType.Folder));	
+		configurePage.clickSaveButton();
 		await app.folderPage.clickDeleteFolderButton();
 		await app.folderPage.clickConfirmDeleteButton();
 

@@ -3,9 +3,6 @@ import { ConfigurePage } from "@/POM/pageObjects/pages/ConfigurePage/ConfigurePa
 import { ItemType, newItemPageData } from "../testData/newItemPageData";
 
 
-
-
-
 export interface ItemCreationFixtures {
 
     createNewItem: ( itemType: ItemType, itemName?: string, submitByKeyboard?: boolean) => Promise<ConfigurePage>;

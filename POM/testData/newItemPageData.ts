@@ -11,6 +11,7 @@ export enum ItemType {
 
 export const newItemPageData = {
 	itemName: faker.word.noun(),
+	folderName: faker.lorem.word(),
 	timestampItemName: () => {return `item-${Date.now()}`},
 	itemTypes: [
 		ItemType.FreestyleProject, 

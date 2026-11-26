@@ -48,7 +48,7 @@ export class App {
 	}	
 
 	get configurePipelinePage() {
-		return (this._configurePipelinePage ??= new ConfigureMultibranchPipelinePage(this.page));
+		return (this._configurePipelinePage ??= new ConfigurePipelinePage(this.page));
 	}
 
 	get configureOrganizationFolderPage() {
