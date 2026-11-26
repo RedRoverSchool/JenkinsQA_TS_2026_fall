@@ -51,8 +51,8 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 				: { app: App } & ItemCreationFixtures & NavigationFixtures
 			) => {
 			
-			for(const [itemType, itemName] of newItemPageData.dashboardItemsNames) {
-				const configurePage = await createNewItem(itemType, itemName);
+			for(const [dashboardItemType, dashboardItemName] of newItemPageData.dashboardItemsNames) {
+				const configurePage = await createNewItem(dashboardItemType, dashboardItemName);
 				await navigateToHomePageFrom(configurePage);
 			}
 
