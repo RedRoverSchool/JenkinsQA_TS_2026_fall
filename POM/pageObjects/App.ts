@@ -8,6 +8,8 @@ import { ConfigureMultibranchPipelinePage } from "./pages/ConfigurePage/Configur
 import { ConfigureMultiConfigurationPage } from "./pages/ConfigurePage/ConfigureMultiConfigurationProjectPage";
 import { ConfigureOrganizationFolderPage } from "./pages/ConfigurePage/ConfigureOrganizationFolderPage";
 import { FolderPage } from "./pages/FolderPage";
+import { MultibranchPipelinePage } from "./pages/MultibranchPipelinePage";
+import { MultibranchPipelineRenamePage } from "./pages/MultibranchPipelineRenamePage";
 
 export class App {
 	private _homePage: HomePage | null = null;
@@ -19,6 +21,8 @@ export class App {
 	private _configurePipelinePage: ConfigurePipelinePage | null = null;
 	private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
 	private _folderPage: FolderPage | null = null;
+	private _multibranchPipelinePage: MultibranchPipelinePage | null = null;
+	private _multibranchPipelineRenamePage: MultibranchPipelineRenamePage | null = null;
 
 
 	constructor(private readonly page: Page) {}
@@ -57,5 +61,13 @@ export class App {
 	
 	get folderPage() {
 		return (this._folderPage ??= new FolderPage(this.page));
+	}
+
+	get multibranchPipelinePage() {
+		return (this._multibranchPipelinePage ??= new MultibranchPipelinePage(this.page));
+	}
+	
+	get multibranchPipelineRenamePage() {
+		return (this._multibranchPipelineRenamePage ??= new MultibranchPipelineRenamePage(this.page));
 	}
 }

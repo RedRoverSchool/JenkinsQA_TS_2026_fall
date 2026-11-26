@@ -1,6 +1,7 @@
 import { newItemPageData, ItemType } from "../testData/newItemPageData";
 import { NavigationFixtures } from "@/POM/fixtures/navigationFixtures";
 import { test, expect, App, ItemCreationFixtures } from "@/POM/fixtures/itemCreationFixtures";
+import { multibranchPipelinePageData } from "../testData/multibranchPipelineRenamePageData";
 
 
 newItemPageData.itemTypes.forEach((itemType: ItemType) => {
@@ -75,6 +76,22 @@ test.describe("US_01.002 | Folder", () => {
 		await app.folderPage.clickConfirmDeleteButton();
 
 		await expect(app.homePage.projectStatusItemName()).not.toBeVisible();		
+	});
+
+});
+
+test.describe("US_06.002 | Multibranch-pipeline Configuration | Rename ", () => {
+	test("TC_POM_06-002-01-Multibranch-pipeline-Rename", async ({ app, createNewItem } 
+			: { app: App } &  ItemCreationFixtures ) => {
+		
+	    const uniqueItemName = newItemPageData.timestampItemName();
+		await createNewItem(ItemType.MultibranchPipeline, uniqueItemName);		
+		await app.configureMultibranchPipelinePage.clickSaveButton();
+		await app.multibranchPipelinePage.clickRenameButton();
+		await app.multibranchPipelineRenamePage.fillNewNameField(multibranchPipelinePageData.newName);
+		await app.multibranchPipelineRenamePage.clickRenameButton();
+		await app.multibranchPipelineRenamePage.header.clickLogo();
+		await expect(app.homePage.projectStatusItemName()).toHaveText(multibranchPipelinePageData.newName);		
 	});
 
 });
