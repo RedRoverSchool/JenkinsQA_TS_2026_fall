@@ -56,7 +56,7 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 				await navigateToHomePageFrom(configurePage);
 			}
 
-			const uniqueItemName = newItemPageData.itemName;
+			const uniqueItemName = newItemPageData.timestampItemName();
 			const configurePage = await createNewItem(itemType, uniqueItemName);
 			await navigateToHomePageFrom(configurePage);
 
