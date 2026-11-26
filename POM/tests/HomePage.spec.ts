@@ -5,8 +5,8 @@ import { ConfigurePage } from "@/POM/pageObjects/pages/ConfigurePage/ConfigurePa
 
 const uniqueItemName = newItemPageData.itemName
 newItemPageData.itemTypes.forEach((itemType: ItemType) => {
-	test.describe(`US_01.001 | Create new  ${itemType} item `, () => {
-		test("TC_01.001.01 | Verify item creation", 
+	test.describe(`US_01.001 | Create new ${itemType} item `, () => {
+		test(`TC_01.001.01 | Verify  ${itemType} item creation`, 
 			async ({ app, navigateToHomePageFrom, createNewItem }
 			: { app: App } & NavigationFixtures & ItemCreationFixtures) => {
 
@@ -26,6 +26,26 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 
 		
 	});
+
+	test.describe(`US_20.001 | Open ${itemType} from Dashboard`, () => {
+	
+		test(`TC_POM_20.001.01 | Verify an item of type ${itemType} is listed among existing items on the common Dashboard`, 
+			async ({ app, createNewItem, navigateToHomePageFrom }
+				: { app: App } & ItemCreationFixtures & NavigationFixtures
+			) => {
+			
+			for(const [dashboardItemName, dashboardItemType] of newItemPageData.dashboardItemsNames) {
+				const configurePage = await createNewItem(dashboardItemType, dashboardItemName);
+				await navigateToHomePageFrom(configurePage);
+			}
+
+			const configurePage = await createNewItem(uniqueItemName, itemType);
+			await navigateToHomePageFrom(configurePage);
+
+			await expect(app.homePage.itemLinkWithName(uniqueItemName)).toHaveCount(1);
+			await expect(app.homePage.itemLinkWithName(uniqueItemName)).toHaveText(newItemPageData.itemName);
+		});
+	});
 });
 
 test.describe("US_01.002 | Folder", () => {
@@ -39,4 +59,6 @@ test.describe("US_01.002 | Folder", () => {
 
 		await expect(app.homePage.projectStatusItemName()).not.toBeVisible();		
 	});
+
 });
+
