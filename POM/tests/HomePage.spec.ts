@@ -46,7 +46,7 @@ newItemPageData.itemTypes.forEach((itemType: ItemType) => {
 
 	test.describe(`US_20.001 | Open ${itemType} from Dashboard`, () => {
 	
-		test(`TC_POM_20.001.01 | Verify few ${itemType} names are visible on the Dashboard`, 
+		test(`TC_POM_20.001.01 | Verify multiple ${itemType} names are visible on the Dashboard`, 
 			async ({ app, createNewItem, navigateToHomePageFrom }
 				: { app: App } & ItemCreationFixtures & NavigationFixtures
 			) => {
