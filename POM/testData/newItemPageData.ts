@@ -3,6 +3,8 @@ import { ItemType } from "@/POM/fixtures/itemCreationFixtures";
 
 export const newItemPageData = {
 	itemName: faker.word.noun(),
+	sourceItemName: `source-${(faker.word.noun())}`,
+	copyItemName: `copy-${(faker.word.noun())}`,
 	itemTypes: [
 		ItemType.FreestyleProject, 
 		ItemType.Pipeline, 
