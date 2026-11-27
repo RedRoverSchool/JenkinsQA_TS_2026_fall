@@ -18,7 +18,7 @@ export class App {
 	private _configureMultibranchPipelinePage: ConfigureMultibranchPipelinePage | null = null;
 	private _configureMultiConfigurationPage: ConfigureMultiConfigurationPage | null = null;
 	private _configureFolderPage: ConfigureFolderPage | null = null;
-	private _configurePipelinePage: ConfigureMultibranchPipelinePage | null = null;
+	private _configurePipelinePage: ConfigurePipelinePage | null = null;
 	private _configureOrganizationFolderPage: ConfigureOrganizationFolderPage | null = null;
 	private _folderPage: FolderPage | null = null;
 	private _multibranchPipelinePage: MultibranchPipelinePage | null = null;
