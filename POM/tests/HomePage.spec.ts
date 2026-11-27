@@ -95,4 +95,10 @@ test.describe("US_06.002 | Multibranch-pipeline Configuration | Rename ", () => 
 	});
 
 });
+test.describe("US_10.001 | Visibility and clickability", () => {
+	test("TC_10.001.01 | Verify visibility of Manage Jenkins option", async ({ app }: { app: App }) => {
 
+		await expect(app.homePage.header.manageJenkinsActionLink()).toBeVisible();
+		await expect(app.homePage.header.manageJenkinsIcon()).toBeVisible();
+	});
+});
