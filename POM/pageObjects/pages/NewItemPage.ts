@@ -9,9 +9,9 @@ export class NewItemPage extends BasePage {
 	itemType = (itemType: ItemType) => this.page.getByText(itemType, { exact: true });
 	freestyleProjectType = () => this.page.locator(".hudson_model_FreeStyleProject");
 	folderType = () => this.page.locator(".com_cloudbees_hudson_plugins_folder_Folder");
-	copyFromOption = () => this.page.locator("#duplicate-job");
-	copyFromField = () => this.page.getByPlaceholder("Type to autocomplete");
-	copyFromDropdownItem = (itemName: string) => this.page.locator(".jenkins-dropdown__item").filter({ hasText: itemName });
+	duplicateItemOption = () => this.page.locator("#duplicate-job");
+	duplicateItemField = () => this.page.getByPlaceholder("Type to autocomplete");
+	duplicateItemDropdownOption = (itemName: string) => this.page.locator(".jenkins-dropdown__item").filter({ hasText: itemName });
 
 	okButton = () => this.page.locator("#ok-button");
 
@@ -30,18 +30,18 @@ export class NewItemPage extends BasePage {
 		return this;
 	}
 
-	async clickCopyFromOption(): Promise<this> {
-		await this.copyFromOption().click();
+	async clickDuplicateItemOption(): Promise<this> {
+		await this.duplicateItemOption().click();
 		return this;
 	}
 
-	async fillCopyFromField(itemName: string): Promise<this> {
-		await this.copyFromField().fill(itemName);
+	async fillDuplicateItemField(itemName: string): Promise<this> {
+		await this.duplicateItemField().fill(itemName);
 		return this;
 	}
 
-	async clickCopyFromDropdownItem(itemName: string): Promise<this> {
-		await this.copyFromDropdownItem(itemName).click();
+	async clickDuplicateItemDropdownOption(itemName: string): Promise<this> {
+		await this.duplicateItemDropdownOption(itemName).click();
 		return this;
 	}
 

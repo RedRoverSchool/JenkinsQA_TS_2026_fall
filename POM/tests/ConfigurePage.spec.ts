@@ -17,9 +17,9 @@ test.describe("US_01.003 | Duplicate an existing item", () => {
 
             await app.homePage.clickNewItemLink();
             await app.newItemPage.fillItemNameField(newItemPageData.copyItemName);
-            await app.newItemPage.clickCopyFromOption();
-            await app.newItemPage.fillCopyFromField(newItemPageData.sourceItemName);
-            await app.newItemPage.clickCopyFromDropdownItem(newItemPageData.sourceItemName);
+            await app.newItemPage.clickDuplicateItemOption();
+            await app.newItemPage.fillDuplicateItemField(newItemPageData.sourceItemName);
+            await app.newItemPage.clickDuplicateItemDropdownOption(newItemPageData.sourceItemName);
             await app.newItemPage.clickOkButton();
 
             await expect(configurePage.descriptionField()).toHaveValue(configurePageData.description);
