@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
 
-export const folderPageData = {
+export const configureFolderPageData = {
 	displayName: "TestdisplayName",
-	folderName: faker.lorem.word(),
 };

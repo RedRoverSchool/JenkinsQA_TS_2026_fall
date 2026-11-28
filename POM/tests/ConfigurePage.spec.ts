@@ -9,7 +9,7 @@ test.describe("US_01.003 | Duplicate an existing item", () => {
         test(`TC_01.003.04 | Verify that description is copied from the source ${itemType}`, async ({ app, createNewItem, navigateToHomePageFrom }: 
             { app: App } & ItemCreationFixtures & NavigationFixtures) => {
 
-            const configurePage = await createNewItem(newItemPageData.sourceItemName, itemType);
+            const configurePage = await createNewItem(itemType, newItemPageData.sourceItemName);
 
             await configurePage.fillDescriptionField(configurePageData.description);
             await configurePage.clickSaveButton();

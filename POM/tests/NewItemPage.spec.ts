@@ -1,5 +1,5 @@
-import { newItemPageData } from "../testData/newItemPageData";
-import { test, expect, App, ItemCreationFixtures, ItemType } from "@/POM/fixtures/itemCreationFixtures";
+import { ItemType, newItemPageData } from "../testData/newItemPageData";
+import { test, expect, App, ItemCreationFixtures,  } from "@/POM/fixtures/itemCreationFixtures";
 
 
 
@@ -9,7 +9,7 @@ test.describe("US_01.001 | Create new item", () => {
 			async ({ app, createNewItem }
 					: { app: App } & ItemCreationFixtures
 			) => {
-			await createNewItem(symbol, ItemType.FreestyleProject, true);
+			await createNewItem(ItemType.FreestyleProject,symbol, true);
 			await expect(app.newItemPage.validationMessage()).toContainText('is an unsafe character');
 		});
 	};
