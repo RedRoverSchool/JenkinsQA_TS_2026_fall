@@ -9,6 +9,9 @@ export class NewItemPage extends BasePage {
 	itemType = (itemType: ItemType) => this.page.getByText(itemType, { exact: true });
 	freestyleProjectType = () => this.page.locator(".hudson_model_FreeStyleProject");
 	folderType = () => this.page.locator(".com_cloudbees_hudson_plugins_folder_Folder");
+	duplicateItemOption = () => this.page.locator("#duplicate-job");
+	duplicateItemField = () => this.page.getByPlaceholder("Type to autocomplete");
+	duplicateItemDropdownOption = (itemName: string) => this.page.locator(".jenkins-dropdown__item").filter({ hasText: itemName });
 
 	okButton = () => this.page.locator("#ok-button");
 
@@ -27,6 +30,21 @@ export class NewItemPage extends BasePage {
 		return this;
 	}
 
+	async clickDuplicateItemOption(): Promise<this> {
+		await this.duplicateItemOption().click();
+		return this;
+	}
+
+	async fillDuplicateItemField(itemName: string): Promise<this> {
+		await this.duplicateItemField().fill(itemName);
+		return this;
+	}
+
+	async clickDuplicateItemDropdownOption(itemName: string): Promise<this> {
+		await this.duplicateItemDropdownOption(itemName).click();
+		return this;
+	}
+
 	async clickOkButton(): Promise<void> {
 		await this.okButton().click();
 	}
@@ -34,5 +52,5 @@ export class NewItemPage extends BasePage {
 	async submitFormByKeyboard(): Promise<void> {
 		await this.page.press("#createItem", "Enter");
 	}
-	
+
 }
